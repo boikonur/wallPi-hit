@@ -18,12 +18,7 @@ int enabled_game = false;
 char startGameA[] = "STARTA";
 char stopGameA[] = "STOPA:%d";
 int hit=3;
-void setup() {
-  delay(3000);
-  Serial.begin(9600);
-    while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(BUTTON_LED_PIN, OUTPUT);
@@ -38,7 +33,13 @@ void setup() {
   digitalWrite(BUTTON_LED_PIN, HIGH);
   digitalWrite(WRITE_EN_PIN, RS485Receive);
 
-
+  void setup() {
+    delay(3000);
+    Serial.begin(9600);
+      while (!Serial) {
+      ; // wait for serial port to connect. Needed for native USB port only
+    }
+    
 }
 void loop() {
 
