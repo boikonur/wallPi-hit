@@ -13,6 +13,8 @@ int result = 0;
 #define SENSOR4 5
 int enabled_game = false;
 
+#define WRITE_EN_PIN 8
+
 char startGameA[] = "STARTA";
 char stopGameA[] = "STOPA:%d";
 int hit=3;
@@ -25,7 +27,7 @@ void setup() {
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(BUTTON_LED_PIN, OUTPUT);
-
+  pinMode(WRITE_EN_PIN, OUTPUT);
 
   pinMode(SENSOR1, INPUT_PULLUP);
   pinMode(SENSOR2, INPUT_PULLUP);
@@ -34,6 +36,7 @@ void setup() {
 
 
   digitalWrite(BUTTON_LED_PIN, HIGH);
+  digitalWrite(WRITE_EN_PIN, RS485Receive);
 
 
 }
@@ -46,9 +49,13 @@ void loop() {
     if (digitalRead(BUTTON_PIN) == LOW)
     {
       digitalWrite(BUTTON_LED_PIN, LOW);
+      digitalWrite(WRITE_EN_PIN, RS485Transmit);
+      delay(100);
       enabled_game = true;
       Serial.print(startGameA);
       Serial.print("\n");
+      delay(100);
+      digitalWrite(WRITE_EN_PIN, RS485Receive);
     }
 
 
@@ -90,11 +97,14 @@ hit+=randNumber;
               stopGameA,
               hit  );
       enabled_game = false;
-     
+
+      digitalWrite(WRITE_EN_PIN, RS485Transmit);
+      delay(100);
       Serial.print(command);
-
-
       Serial.print("\n");
+      delay(100);
+      digitalWrite(WRITE_EN_PIN, RS485Receive);
+
        hit=3;
        for(int i=0; i<5 ; i++){
          digitalWrite(BUTTON_LED_PIN, HIGH);
@@ -102,8 +112,8 @@ hit+=randNumber;
       digitalWrite(BUTTON_LED_PIN, LOW);
       delay(100);
        }
-       
-   
+
+
     }
 
   }
@@ -135,5 +145,3 @@ void animateButton2()
     delay(1000);
   }
 }
-
-
