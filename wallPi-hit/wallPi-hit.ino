@@ -19,6 +19,9 @@ char startGameA[] = "STARTA";
 char stopGameA[] = "STOPA:%d";
 int hit=3;
 
+  void setup() {
+    
+
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(BUTTON_LED_PIN, OUTPUT);
@@ -32,8 +35,6 @@ int hit=3;
 
   digitalWrite(BUTTON_LED_PIN, HIGH);
   digitalWrite(WRITE_EN_PIN, RS485Receive);
-
-  void setup() {
     delay(3000);
     Serial.begin(9600);
       while (!Serial) {
